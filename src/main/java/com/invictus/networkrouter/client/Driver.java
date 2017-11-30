@@ -14,10 +14,9 @@ public class Driver {
         long endTime = System.currentTimeMillis();
         System.out.println("Sparse Graph created in "+ (endTime - startTime)/1000.0 + " sec");
         System.out.println();
-        System.out.println("Starting to create a Dense Graph");
+        //System.out.println("Starting to create a Dense Graph");
         startTime = System.currentTimeMillis();
         GraphGenerator denseGraph = new GraphGenerator(2);
-        //denseGraph.printAllEdges();
         endTime = System.currentTimeMillis();
         System.out.println("Dense Graph created in "+ (endTime - startTime)/1000.0 + " sec");
         System.out.println("");
@@ -25,9 +24,13 @@ public class Driver {
         Driver o = new Driver();
         for(int i = 0; i < 1; i++) {
             System.out.println("=========================================");
-            System.out.println("Iteration "+ (i + 1) +": ");
+            System.out.println("Sparse Graph: ");
             o.findMaxBWPath(r, sparseGraph);
+
         }
+        System.out.println("=========================================");
+        System.out.println("Dense Graph: ");
+        o.findMaxBWPath(r, denseGraph);
     }
 
     private void findMaxBWPath(Random r, GraphGenerator graph) {

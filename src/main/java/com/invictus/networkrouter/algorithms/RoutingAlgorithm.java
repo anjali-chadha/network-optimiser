@@ -50,7 +50,7 @@ public class RoutingAlgorithm {
      * Use Union-find to check whether the new vertex forms a cycle or not
      * @return
      */
-    private void maxBandwidth3() {
-        new KruskalAlgorithm(adjList, g.getAllEdges(), startVertex, endVertex);
+    public KruskalAlgorithm maxBandwidth3() {
+        return new KruskalAlgorithm(adjList, g.getAllEdges(), startVertex, endVertex);
     }
 }
