@@ -1,3 +1,8 @@
+package com.invictus.networkrouter.algorithms;
+
+import com.invictus.networkrouter.graph.Edge;
+import com.invictus.networkrouter.graph.GraphGenerator;
+
 import java.util.List;
 
 public class RoutingAlgorithm {
@@ -5,13 +10,13 @@ public class RoutingAlgorithm {
     private int startVertex;
     private int endVertex;
     private List<Edge>[] adjList;
-    private int n;
+    private GraphGenerator g;
 
-    RoutingAlgorithm(int startVertex, int endVertex, List<Edge>[] adjList, int algorithmType) {
+    public RoutingAlgorithm(int startVertex, int endVertex, GraphGenerator g, int algorithmType) {
         this.startVertex = startVertex;
         this.endVertex = endVertex;
-        this.adjList = adjList;
-        this.n = adjList.length - 1;
+        this.g = g;
+        this.adjList = g.getAdjList();
         switch(algorithmType) {
             case 1: maxBandwidth1();
             break;
@@ -19,6 +24,7 @@ public class RoutingAlgorithm {
             break;
             case 3: maxBandwidth3();
             break;
+                //TODO: Add default and throw error
         }
     }
 
@@ -26,16 +32,16 @@ public class RoutingAlgorithm {
      * Using Dijkstra algorithm without using a heap
      * @return
      */
-    private int maxBandwidth1() {
-        return 0;
+    private void maxBandwidth1() {
+        new DijkstraWithoutHeap(adjList, startVertex, endVertex);
     }
 
-    /**d
+    /**
      * Using Dijkstra algorithm with heap for storing fringes
      * @return
      */
-    private int maxBandwidth2() {
-        return 0;
+    private void maxBandwidth2() {
+        new DijkstraWithHeap(adjList, startVertex, endVertex);
     }
 
     /**
@@ -44,24 +50,7 @@ public class RoutingAlgorithm {
      * Use Union-find to check whether the new vertex forms a cycle or not
      * @return
      */
-    private int maxBandwidth3() {
-        //TODO: See how to instantiate heap.
-        MaxHeap2 heap = new MaxHeap2(n);
-        int m = heap.size();
-
-        UnionFind uf = new UnionFind();
-        uf.make_set(n + 1);
-
-        while(m != 0) {
-            //int minimum
-            Edge maxEdge = heap.maximum();
-            heap.delete(maxEdge);
-            if(uf.isConnected(maxEdge.))
-            m--;
-        }
-
-        return 0;
+    private void maxBandwidth3() {
+        new KruskalAlgorithm(adjList, g.getAllEdges(), startVertex, endVertex);
     }
-
-
 }

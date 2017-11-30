@@ -1,5 +1,6 @@
-import java.util.LinkedList;
-import java.util.Queue;
+package com.invictus.networkrouter.algorithms;
+
+import java.util.*;
 
 /**
  * Performing union by rank and path compression.
@@ -18,6 +19,9 @@ public class UnionFind {
     void make_set(int n) {
         parent = new int[n];
         rank = new int[n];
+        for(int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
     }
 
     /**
@@ -27,7 +31,7 @@ public class UnionFind {
     private int find(int v) {
         int w = v;
         Queue<Integer> queue = new LinkedList<>();
-        while(w != 0) {
+        while(w != parent[w]) {
             queue.add(w);
             w = parent[w];
         }
@@ -47,22 +51,25 @@ public class UnionFind {
      * increase the rank of the parent vertex, since that results in the increment
      * of the height of the tree.
      */
-    private void union(int v1, int v2) {
-        int a = rank[v1];
-        int b = rank[v2];
+    public void union(int v1, int v2) {
+        int rootA = find(v1);
+        int rootB = find(v2);
+
+        int a = rank[rootA];
+        int b = rank[rootB];
 
         if(a > b){
-            parent[v2] = v1;
+            parent[rootB] = rootA;
         } else if(a < b){
-            parent[v1] = v2;
+            parent[rootA] = rootB;
         } else {
             //equality case
-            parent[v1] = v2;
-            rank[v2]++;
+            parent[rootA] = rootB;
+            rank[rootB]++;
         }
     }
 
     boolean isConnected(int v1, int v2) {
-        return (parent[v1] != 0) && (parent[v1] == parent[v2]);
+        return find(v1) == find(v2);
     }
 }
